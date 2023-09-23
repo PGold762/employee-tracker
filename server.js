@@ -1,14 +1,7 @@
-// Import and require express
-const express = require('express');
-// Import and require mysql2
+// Import and require mysql2, inquirer, console.table
+const inquirer = require('inquirer');
 const mysql = require('mysql2');
-
-const PORT = process.env.PORT || 3001;
-const app = express();
-
-// Express middleware
-app.use(express.urlencoded({ extended: false }));
-app.use(express.json());
+require (console.table);
 
 // Connect to database
 const db = mysql.createConnection(
@@ -21,16 +14,9 @@ const db = mysql.createConnection(
   console.log(`Connected to the company_db database.`)
 );
 
-// Query database
-db.query('SELECT * FROM table_name', function (err, results) {
-  console.log(results);
-});
-
-// Default response for any other request (Not Found)
-app.use((req, res) => {
-  res.status(404).end();
-});
-
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+// Connect to the database
+connection.connect((err) => {
+  if (err) throw err;
+  console.log('Connected to the database');
+  startApp(); // Start the application after connecting to the database
 });
