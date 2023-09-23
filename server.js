@@ -34,6 +34,7 @@ function startApp() {
           'Add a role',
           'Add an employee',
           'Update an employee role',
+          'Close application', // Add this option
         ],
       },
     ])
@@ -60,6 +61,10 @@ function startApp() {
         case 'Update an employee role':
           updateEmployeeRole();
           break;
+        case 'Close application':
+          console.log('Closing the application.');
+          closeConnection(); // Close the database connection and exit
+          break;
         default:
           connection.end(); // Close the database connection and exit the application
       }
@@ -69,7 +74,6 @@ function startApp() {
       connection.end(); // Close the database connection and exit the application
     });
 }
-
 // Function to View All Departments
 function viewAllDepartments() {
   // Execute a SQL query to retrieve all departments and display them
@@ -158,61 +162,69 @@ function addDepartment() {
 
 // Function to Add New Role
 function addRole() {
-  inquirer
-    .prompt([
-      {
-        type: 'input',
-        name: 'jobTitle',
-        message: 'Enter the job title for the new role:',
-        validate: function (value) {
-          if (value.trim() === '') {
-            return 'Please enter a job title.';
-          }
-          return true;
-        },
-      },
-      {
-        type: 'number',
-        name: 'salary',
-        message: 'Enter the salary for the new role:',
-        validate: function (value) {
-          if (isNaN(value) || value <= 0) {
-            return 'Please enter a valid salary (a positive number).';
-          }
-          return true;
-        },
-      },
-      {
-        type: 'list',
-        name: 'departmentId',
-        message: 'Select the department for this role:',
-        choices: departments.map((department) => ({
-          name: department.name,
-          value: department.id,
-        })),
-      },
-    ])
-    .then((answers) => {
-      // Insert the new role into the roles table
-      const insertQuery =
-        'INSERT INTO roles (job_title, salary, department_id) VALUES (?, ?, ?)';
+  // Fetch the list of departments from the database
+  const departmentQuery = 'SELECT id, name FROM departments';
 
-      connection.query(
-        insertQuery,
-        [answers.jobTitle, answers.salary, answers.departmentId],
-        (err, result) => {
-          if (err) throw err;
+  connection.query(departmentQuery, (err, departments) => {
+    if (err) throw err;
 
-          console.log(`\nNew role "${answers.jobTitle}" has been added.`);
-          startApp(); // Return to the main menu after adding the role
-        }
-      );
-    })
-    .catch((error) => {
-      console.error(error);
-      startApp(); // Return to the main menu on error
-    });
+    inquirer
+      .prompt([
+        {
+          type: 'input',
+          name: 'jobTitle',
+          message: 'Enter the job title for the new role:',
+          validate: function (value) {
+            if (value.trim() === '') {
+              return 'Please enter a job title.';
+            }
+            return true;
+          },
+        },
+        {
+          type: 'number',
+          name: 'salary',
+          message: 'Enter the salary for the new role:',
+          validate: function (value) {
+            if (isNaN(value) || value <= 0) {
+              return 'Please enter a valid salary (a positive number).';
+            }
+            return true;
+          },
+        },
+        {
+          type: 'list',
+          name: 'departmentId',
+          message: 'Select the department for this role:',
+          choices: departments.map((department) => ({
+            name: department.name,
+            value: department.id,
+          })),
+        },
+      ])
+      .then((answers) => {
+        // Insert the new role into the roles table with the selected department
+        const insertQuery =
+          'INSERT INTO roles (job_title, salary, department_id) VALUES (?, ?, ?)';
+
+        connection.query(
+          insertQuery,
+          [answers.jobTitle, answers.salary, answers.departmentId],
+          (err, result) => {
+            if (err) throw err;
+
+            console.log(`\nNew role "${answers.jobTitle}" has been added to department.`);
+            startApp(); // Return to the main menu after adding the role
+          }
+        );
+      })
+      .catch((error) => {
+        console.error(error);
+        startApp(); // Return to the main menu on error
+      });
+  });
 }
+
 
 // Function to Add Employee
 function addEmployee() {
