@@ -38,7 +38,7 @@ Download the files from the repo and install locally. Be sure to install NPM, in
 
 This is an app local on your device that you may trigger within terminal and answer the questions
 
-Link to video: [Employee Tracker](https://hidden-hollows-74969-d62c2e890e5e.herokuapp.com/)
+Link to video: [Employee Tracker](https://drive.google.com/file/d/1k6td9spQm3I6b-swvIUIiXLssn7-XKxP/view)
 
 Screenshot of App: 
 
@@ -49,6 +49,8 @@ Screenshot of App:
 * Worked with Tutor Andrew Tirpok
 
 * Reviewed documentation for [MySQL2] (https://www.npmjs.com/package/mysql2)
+
+* Used the following to help with Primary Keys: [W3Schools](https://www.w3schools.com/sql/sql_primarykey.ASP#:~:text=The%20PRIMARY%20KEY%20constraint%20uniquely,or%20multiple%20columns%20(fields).)
 
 ## License
 
