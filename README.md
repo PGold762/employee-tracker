@@ -32,20 +32,23 @@ THEN I am prompted to select an employee to update and their new role and this i
 
 ## Installation
 
-Download the files from the repo and install locally. Be sure to install NPM, inquirer, and run server.js file in node.
+Download the files from the repo and install locally. Be sure to install NPM, inquirer8.2.4, mysql, console.table. Then login to mysql using the following command: mysql -u root -p . Then source schema.sql. This will load the database. Then run server.js file in node to begin the application.
 
 ## Usage
 
-This is an app saved locally: [Employee Tracker](https://hidden-hollows-74969-d62c2e890e5e.herokuapp.com/)
+This is an app local on your device that you may trigger within terminal and answer the questions
+
+Link to video: [Employee Tracker](https://hidden-hollows-74969-d62c2e890e5e.herokuapp.com/)
 
 Screenshot of App: 
 
-![Employee Tracker](/svg-logo.png "Employee Tracker")
+![Employee Tracker](/employee-cap.png "Employee Tracker")
 
 ## Credits
 
-* Used the following for help with Deletion: [GeeksforGeeks](https://www.geeksforgeeks.org/express-js-app-delete-function/)
+* Worked with Tutor Andrew Tirpok
 
+* Reviewed documentation for [MySQL2] (https://www.npmjs.com/package/mysql2)
 
 ## License
 
